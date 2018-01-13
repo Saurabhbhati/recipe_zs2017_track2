@@ -1,11 +1,11 @@
-Embedded Segmental K-Means for ZeroSpeech2017 Track 2
-=====================================================
+Phoneme Based Embedded Segmental K-Means for ZeroSpeech2017 Track 2
+===================================================================
+
+ES-Kmeans starts from an initial set of boundaries and iteratively eliminates boundaries to discover frequently occurring longer word patterns. We use phonemes for initializing the ES-Kmeans. The phoneme initialization usually results in a lower deviation between the discovered word boundaries and true word boundaries as smaller units like phoneme allow finer adjustments while discovering words. The usage of smaller acoustic units also increases the number of combinations that the algorithm has to check. We use a deep stacked autoencoder to learn compact embeddings to reduce the computational cost.  
 
 Warning
 -------
-This is a preliminary version of our system. This is not a final recipe, and
-is still being worked on.
-
+This is a preliminary version of our system. This is not a final recipe, and is still being worked on.
 
 Overview
 --------
@@ -15,9 +15,7 @@ A description of the challenge can be found here:
 
 Disclaimer
 ----------
-The code provided here is not pretty. But I believe that research should be
-reproducible, and I hope that this repository is sufficient to make this
-possible for the paper mentioned above. I provide no guarantees with the code,
+The code provided here is not pretty. I provide no guarantees with the code,
 but please let me know if you have any problems, find bugs or have general
 comments.
 
@@ -54,17 +52,15 @@ Extract MFCC features by running the steps in
 [features/readme.md](features/readme.md).
 
 
-Unsupervised syllable boundary detection
+Unsupervised phoneme boundary detection
 ----------------------------------------
-We use the unsupervised syllable boundary detection algorithm described in:
+We use the unsupervised phoneme boundary detection algorithm described in:
 
-- O. J. Räsänen, G. Doyle, and M. C. Frank, "Unsupervised word discovery from
-  speech using automatic segmentation into syllable-like units," in *Proc.
-  Interspeech*, 2015.
+- Saurabhchand Bhati, Shekhar Nayak, and K. Sri Rama Murty, “Unsupervised Segmentation of Speech Signals Using Kernel-Gram Matrices" in Proc. NCVPRIPG, Communications in Computer and Information Science, Springer
 
-Obtain the syllabe boundaries by running the steps in
-[syllables/readme.md](syllables/readme.md).
+A phoneme based system for feature learning and spoken term discovery can be found here: 
 
+- Saurabhchand Bhati, Shekhar Nayak, and K. Sri Rama Murty, “Unsupervised Speech Signal to Symbol Transformation for Zero Resource Speech Application” in Proc. Interspeech 2017 [pdf](http://www.isca-speech.org/archive/Interspeech_2017/pdfs/1476.PDF) 
 
 Acoustic word embeddings: downsampling
 --------------------------------------
@@ -72,6 +68,7 @@ We use one of the simplest methods to obtain acoustic word embeddings:
 downsampling. Different types of input features can be used. Run the steps in
 [downsample/readme.md](downsample/readme.md).
 
+We use keras to learn low dimensional embeddings from the downsampled segments. 
 
 Unsupervised segmentation and clustering
 ----------------------------------------
@@ -85,11 +82,5 @@ Dependencies
 - [Python](https://www.python.org/)
 - [NumPy](http://www.numpy.org/) and [SciPy](http://www.scipy.org/).
 - [HTK](http://htk.eng.cam.ac.uk/): Used for MFCC feature extraction.
-- [Matlab](https://www.mathworks.com/): Used for syllable boundary detection.
-
-
-Collaborators
--------------
-- [Herman Kamper](http://www.kamperh.com/)
-- [Karen Livescu](http://ttic.uchicago.edu/~klivescu/)
-- [Sharon Goldwater](http://homepages.inf.ed.ac.uk/sgwater/)
+- [Matlab](https://www.mathworks.com/): Used for phoneme boundary detection.
+- [keras](https://keras.io/): Used for training stacked auto-encoder
